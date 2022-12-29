@@ -1,9 +1,9 @@
 import type { ICredentialNodeAccess } from 'n8n-workflow';
 import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { IsArray, IsObject, IsString, Length } from 'class-validator';
-import { SharedCredentials } from './SharedCredentials';
+import type { SharedCredentials } from './SharedCredentials';
 import { AbstractEntity, jsonColumnType } from './AbstractEntity';
-import type { ICredentialsDb } from '../../Interfaces';
+import type { ICredentialsDb } from '@/Interfaces';
 
 @Entity()
 export class CredentialsEntity extends AbstractEntity implements ICredentialsDb {
@@ -28,7 +28,7 @@ export class CredentialsEntity extends AbstractEntity implements ICredentialsDb 
 	})
 	type: string;
 
-	@OneToMany(() => SharedCredentials, (sharedCredentials) => sharedCredentials.credentials)
+	@OneToMany('SharedCredentials', 'credentials')
 	shared: SharedCredentials[];
 
 	@Column(jsonColumnType)
